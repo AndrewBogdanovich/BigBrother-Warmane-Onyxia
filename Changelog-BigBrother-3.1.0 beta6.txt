@@ -1,0 +1,170 @@
+------------------------------------------------------------------------
+r229 | oscarucb | 2010-09-20 03:51:33 +0000 (Mon, 20 Sep 2010) | 4 lines
+Changed paths:
+   A /tags/3.1.0 beta6 (from /trunk:228)
+
+Tagging as 3.1.0 beta6
+
+3.1.0 beta6 adds:
+FIX: default to suppressing events that don't involve group members (eg dueling in dalaran)
+------------------------------------------------------------------------
+r228 | oscarucb | 2010-09-20 03:48:34 +0000 (Mon, 20 Sep 2010) | 2 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/localization/deDE.lua
+   M /trunk/localization/enUS.lua
+   M /trunk/localization/frFR.lua
+   M /trunk/localization/koKR.lua
+   M /trunk/localization/ruRU.lua
+   M /trunk/localization/zhCN.lua
+   M /trunk/localization/zhTW.lua
+
+FIX: default to suppressing events that don't involve group members (eg dueling in dalaran)
+
+------------------------------------------------------------------------
+r226 | oscarucb | 2010-09-14 22:12:25 +0000 (Tue, 14 Sep 2010) | 3 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/localization/deDE.lua
+   M /trunk/localization/enUS.lua
+   M /trunk/localization/frFR.lua
+   M /trunk/localization/koKR.lua
+   M /trunk/localization/ruRU.lua
+   M /trunk/localization/zhCN.lua
+   M /trunk/localization/zhTW.lua
+
+smarter checks when checks are set to only one of flasks or elixirs
+add some useful error messages to checks
+
+------------------------------------------------------------------------
+r225 | oscarucb | 2010-09-14 20:15:20 +0000 (Tue, 14 Sep 2010) | 4 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/localization/deDE.lua
+   M /trunk/localization/enUS.lua
+   M /trunk/localization/frFR.lua
+   M /trunk/localization/koKR.lua
+   M /trunk/localization/ruRU.lua
+   M /trunk/localization/zhCN.lua
+   M /trunk/localization/zhTW.lua
+
+Add custom channel and battleground output for events
+Rework the way event reporting works to avoid duplicate spam in some cases
+Minor fixes
+
+------------------------------------------------------------------------
+r224 | oscarucb | 2010-09-14 05:45:55 +0000 (Tue, 14 Sep 2010) | 6 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/SpellData.lua
+   M /trunk/localization/deDE.lua
+   M /trunk/localization/enUS.lua
+   M /trunk/localization/frFR.lua
+   M /trunk/localization/koKR.lua
+   M /trunk/localization/ruRU.lua
+   M /trunk/localization/zhCN.lua
+   M /trunk/localization/zhTW.lua
+
+Add reporting options for taunts and interrupts
+Rearrange the event menu a bit
+Improve raid icon processing
+Fix reporting in arenas and disable it in battlegrounds
+Fix reporting of Repentance breakage (ticket #15)
+
+------------------------------------------------------------------------
+r220 | oscarucb | 2010-09-12 18:47:56 +0000 (Sun, 12 Sep 2010) | 2 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+
+minor output tweak
+
+------------------------------------------------------------------------
+r219 | oscarucb | 2010-09-10 19:09:37 +0000 (Fri, 10 Sep 2010) | 2 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/SpellData.lua
+   M /trunk/localization/deDE.lua
+   M /trunk/localization/enUS.lua
+   M /trunk/localization/frFR.lua
+   M /trunk/localization/koKR.lua
+   M /trunk/localization/ruRU.lua
+   M /trunk/localization/zhCN.lua
+   M /trunk/localization/zhTW.lua
+
+NEW FEATURE: option to report resurections and combat resurrections
+
+------------------------------------------------------------------------
+r217 | oscarucb | 2010-09-09 06:54:19 +0000 (Thu, 09 Sep 2010) | 5 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/localization/deDE.lua
+   M /trunk/localization/enUS.lua
+   M /trunk/localization/frFR.lua
+   M /trunk/localization/koKR.lua
+   M /trunk/localization/ruRU.lua
+   M /trunk/localization/zhCN.lua
+   M /trunk/localization/zhTW.lua
+
+Add LDB support, by popular demand
+NEW OPTION: Automatically show the buff window on a ready check
+NEW OPTION: Automatically close the buff window on combat
+
+
+------------------------------------------------------------------------
+r215 | oscarucb | 2010-09-06 22:33:58 +0000 (Mon, 06 Sep 2010) | 2 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/localization/deDE.lua
+   M /trunk/localization/enUS.lua
+   M /trunk/localization/frFR.lua
+   M /trunk/localization/koKR.lua
+   M /trunk/localization/ruRU.lua
+   M /trunk/localization/zhCN.lua
+   M /trunk/localization/zhTW.lua
+
+Add an option to automatically perform a quick check on ready check
+
+------------------------------------------------------------------------
+r213 | oscarucb | 2010-09-04 09:25:33 +0000 (Sat, 04 Sep 2010) | 2 lines
+Changed paths:
+   M /trunk/BigBrother.toc
+   M /trunk/localization/koKR.lua
+
+Add Korean translation, thanks to miga1
+
+------------------------------------------------------------------------
+r212 | oscarucb | 2010-09-04 09:05:43 +0000 (Sat, 04 Sep 2010) | 2 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/BuffWindow.lua
+
+fix errors when toggling standby mode with the buffwindow open
+
+------------------------------------------------------------------------
+r211 | oscarucb | 2010-09-03 20:16:33 +0000 (Fri, 03 Sep 2010) | 2 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+
+fix ticket #14
+
+------------------------------------------------------------------------
+r209 | oscarucb | 2010-09-03 10:53:45 +0000 (Fri, 03 Sep 2010) | 12 lines
+Changed paths:
+   M /trunk/BigBrother.lua
+   M /trunk/BigBrother.toc
+   M /trunk/BuffWindow.lua
+   M /trunk/SpellData.lua
+
+Merge fan-update branch:
+-----------------------
+FIX: Throttle buff window updates to fix framerate performance problems (esp in combat)
+FIX: Ensure the minimap icon isnt covered by others
+FIX: Intermittent lua errors on group changes (esp when leaving a large raid)
+Add runescroll of fortitude, drums of forgotten kings, mana spring totem, battle shout, inspiration
+AddonLoader support
+Save the BuffWindow position and size
+TOC update
+Add some missing consumables
+
+
+------------------------------------------------------------------------
