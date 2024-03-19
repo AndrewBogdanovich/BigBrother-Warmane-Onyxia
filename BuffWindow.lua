@@ -1,6 +1,6 @@
 local BarHeight=20
 local BarWidth=300
-local TotalBuffs=5
+local TotalBuffs=10
 local PlayersShown=8
 local RowsCreated=8
 local BuffSpacing=18
@@ -72,29 +72,41 @@ local BigBrother_BuffTable={
 			{{spellData(1126)},{spellData(21849)}}, -- 1126 Mark of the Wild, 21849 Gift of the Wild
 			{{spellData(14752)},{spellData(27681)}}, -- 14752 Divine Spirit, 27681 Prayer of Spirit
 			{{spellData(976)},{spellData(27683)}}, -- 976 Shadow Protection, 27683 Prayer of Shadow Protection
+			{},
+			{},
+			{},
+			{},
+			{}
 		}
 	},
 	{
 		name=L["World Buffs"],
-		sortFunc=Sort_PallyBuffs,
+		sortFunc=Sort_RaidBuffs,
 		buffs={
-			{
-				{spellData(15366)}, -- 15366 Songflower Serenade
-				{spellData(16609)}, -- 16609 Warchief's Blessing
-				{spellData(22888)}, -- 16609 Rallying Cry of the Dragonslayer
-				{spellData(24425)}, -- 24425 Spirit of Zandalar
-				{spellData(23768)}, -- 23768 Sayge's Dark Fortune of Damage(increase damage 10%)
+			{{spellData(15366)}}, -- 15366 Songflower Serenade
+			{{spellData(16609)}}, -- 16609 Warchief's Blessing
+			{{spellData(22888)}}, -- 16609 Rallying Cry of the Dragonslayer
+			{{spellData(24425)}}, -- 24425 Spirit of Zandalar
+
+			{{spellData(23768)}, -- 23768 Sayge's Dark Fortune of Damage(increase damage 10%)
 				{spellData(23769)}, -- 23769 Sayge's Dark Fortune of Resistance(+25 all resistance)
 				{spellData(23767)}, -- 23767 Sayge's Dark Fortune of Armor(increase armor 10%)
 				{spellData(23766)}, -- 23766 Sayge's Dark Fortune of Intelligence(increase intelligence 10%)
 				{spellData(23738)}, -- 23738 Sayge's Sayge's Dark Fortune of Spirit(increase spirit 10%)
 				{spellData(23737)}, -- 23737 Sayge's Dark Fortune of Stamina(increase stamina 10%)
 				{spellData(23735)}, -- 23735 Sayge's Dark Fortune of Strength(increase strength 10%)
-				{spellData(23736)}, -- 23736 Sayge's Dark Fortune of Agility(increase agility 10%)
-				{spellData(22818)}, -- 22818 Mol'dar's Moxie
-				{spellData(22817)}, -- 22817 Fengus' Ferocity
-				{spellData(22820)}, -- 22820 Slip'kik's Savvy
+				{spellData(23736)}}, -- 23736 Sayge's Dark Fortune of Agility(increase agility 10%)
+
+			{{spellData(22818)}}, -- 22818 Mol'dar's Moxie
+			{{spellData(22817)}}, -- 22817 Fengus' Ferocity
+			{{spellData(22820)}}, -- 22820 Slip'kik's Savvy
+			{{spellData(30178)}, -- 30178 Permanent R.O.I.D.S.
+				{spellData(30173)}, -- 30173 Permanent Ground Scorpok Assay
+				{spellData(30164)}, -- 30164 Permanent Lung Juice Cocktail
+				{spellData(30175)}, -- 30175 Permanent Cerebral Cortex Compound
+				{spellData(30177)}, -- 30177 Permanent Gizzard Gum
 			},
+			{{spellData(30336)}}, -- 30336 Permanent Spirit of Zanza
 		}
 	},
 	{
@@ -106,15 +118,25 @@ local BigBrother_BuffTable={
 			{{spellData(19742)},{spellData(25894)},{spellData(5677)}}, -- 19742 Blessing of Wisdom, 25894 Greater Blessing of Wisdom, 5677 Mana Spring
 			{{spellData(20911)},{spellData(25899)},{spellData(14893)}}, -- 20911 Blessing of Sanctuary, 25899 Greater Blessing of Sanctuary, 14893 Inspiration
 			{{spellData(1038)},{spellData(25895)}}, -- 1038 Blessing of Salvation, 25899 Greater Blessing of Salvation
+			{},
+			{},
+			{},
+			{},
+			{},
 		}
 	},
 	{
 		name=L["Consumables"],
 		sortFunc=Sort_PallyBuffs,
 		buffs={
-			{},
 			BigBrother_Flasks,
 			BigBrother_Elixirs_Battle,
+			BigBrother_Elixirs_Battle,
+			BigBrother_Elixirs_Battle,
+			BigBrother_Elixirs_Battle,
+			BigBrother_Elixirs_Guardian,
+			BigBrother_Elixirs_Guardian,
+			BigBrother_Elixirs_Guardian,
 			BigBrother_Elixirs_Guardian,
       		BigBrother_Foodbuffs,
 		}
@@ -151,8 +173,8 @@ function BuffWindow_Functions:CreateBuffRow(parent, xoffset, yoffset)
 
 		Row.Buff[i].texture=Row.Buff[i]:CreateTexture(nil,"OVERLAY")
 		Row.Buff[i].texture:SetAllPoints(Row.Buff[i])
-		Row.Buff[i].texture:SetTexture("Interface\\Buttons\\UI-CheckBox-Check.blp")
-			
+		--Row.Buff[i].texture:SetTexture("Interface\\Buttons\\UI-CheckBox-Check.blp")
+
 		Row.Buff[i].BuffName = nil
 		--GameTooltip:ClearLines();GameTooltip:AddLine(this.BuffName);GameTooltip:Show()
 		Row.Buff[i]:SetScript("OnEnter", BuffWindow_Functions.OnEnterBuff)
@@ -209,8 +231,8 @@ function BigBrother:ToggleBuffWindow()
 		if BigBrother_BuffWindow:IsShown() then
 			BigBrother_BuffWindow:Hide()
 			if self:IsEventRegistered("UNIT_AURA") then
-			  -- might already be unregistered if we standby with buffwin open
-			  self:UnregisterEvent("UNIT_AURA")
+				-- might already be unregistered if we standby with buffwin open
+				self:UnregisterEvent("UNIT_AURA")
 			end
 		else
 			BuffWindow_UpdateBuffs()
@@ -227,47 +249,47 @@ function BigBrother:CreateBuffWindow()
 	local BuffWindow = CreateFrame("FRAME",nil,UIParent)
 
 	BuffWindow:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
-                                            edgeFile = "Interface/Tooltips/UI-Tooltip-Border", 
-                                            tile = true, tileSize = 16, edgeSize = 16, 
-                                            insets = { left = 4, right = 4, top = 4, bottom = 4 }});
+		edgeFile = "Interface/Tooltips/UI-Tooltip-Border", 
+		tile = true, tileSize = 16, edgeSize = 16, 
+		insets = { left = 4, right = 4, top = 4, bottom = 4 }});
 	BuffWindow:SetBackdropColor(0,0,0,0.5);
 	BuffWindow:SetWidth(BarWidth+16+24);
 	BuffWindow:SetMovable(true)
 	BuffWindow:SetClampedToScreen(true)
 	BuffWindow:EnableMouse()
 	
-  BuffWindow:ClearAllPoints()
+	BuffWindow:ClearAllPoints()
 	if BigBrother.db.profile.BuffWindow_posX then
-     BuffWindow:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT",
-                         BigBrother.db.profile.BuffWindow_posX,
-                         BigBrother.db.profile.BuffWindow_posY)	 
-     BuffWindow:SetHeight(BigBrother.db.profile.BuffWindow_height);                           
+		BuffWindow:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT",
+			BigBrother.db.profile.BuffWindow_posX,
+			BigBrother.db.profile.BuffWindow_posY)	 
+		BuffWindow:SetHeight(BigBrother.db.profile.BuffWindow_height);                           
 	else
-     BuffWindow:SetPoint("CENTER",UIParent)
-     BuffWindow:SetHeight(190);     
+		BuffWindow:SetPoint("CENTER",UIParent)
+		BuffWindow:SetHeight(190);     
 	end
 
 	BuffWindow:SetScript("OnMouseDown", function() 
-						if ( ( ( not BigBrother_BuffWindow.isLocked ) or ( BigBrother_BuffWindow.isLocked == 0 ) ) and ( arg1 == "LeftButton" ) ) then
-						  BigBrother_BuffWindow:StartMoving();
-						  BigBrother_BuffWindow.isMoving = true;
-						 end
-						end)
+		if ( ( ( not BigBrother_BuffWindow.isLocked ) or ( BigBrother_BuffWindow.isLocked == 0 ) ) and ( arg1 == "LeftButton" ) ) then
+			BigBrother_BuffWindow:StartMoving();
+			BigBrother_BuffWindow.isMoving = true;
+		end
+	end)
 	BuffWindow:SetScript("OnMouseUp", function() 
-						if ( BigBrother_BuffWindow.isMoving ) then
-						  BigBrother_BuffWindow:StopMovingOrSizing();
-						  BigBrother_BuffWindow.isMoving = false;
-						  BigBrother.db.profile.BuffWindow_posX = BigBrother_BuffWindow:GetLeft();
-						  BigBrother.db.profile.BuffWindow_posY = BigBrother_BuffWindow:GetTop();				  
-						 end
-						end)
-					
+		if ( BigBrother_BuffWindow.isMoving ) then
+			BigBrother_BuffWindow:StopMovingOrSizing();
+			BigBrother_BuffWindow.isMoving = false;
+			BigBrother.db.profile.BuffWindow_posX = BigBrother_BuffWindow:GetLeft();
+			BigBrother.db.profile.BuffWindow_posY = BigBrother_BuffWindow:GetTop();				  
+		end
+	end)
+
 	BuffWindow:SetScript("OnHide", function() 
-						if ( BigBrother_BuffWindow.isMoving ) then
-						  BigBrother_BuffWindow:StopMovingOrSizing();
-						  BigBrother_BuffWindow.isMoving = false;
-						 end
-						end)
+		if ( BigBrother_BuffWindow.isMoving ) then
+			BigBrother_BuffWindow:StopMovingOrSizing();
+			BigBrother_BuffWindow.isMoving = false;
+		end
+	end)
 	
 	BuffWindow:Show()
 
@@ -275,6 +297,7 @@ function BigBrother:CreateBuffWindow()
 	BuffWindow.Title:SetPoint("TOP",BuffWindow,"TOP",0,-8)
 	BuffWindow.Title:SetTextColor(1.0,1.0,1.0)
 
+	-- Left arrow button
 	BuffWindow.LeftButton=CreateFrame("Button",nil,BuffWindow)
 	BuffWindow.LeftButton:SetNormalTexture("Interface\\Buttons\\UI-SpellbookIcon-PrevPage-Up.blp")
 	BuffWindow.LeftButton:SetPushedTexture("Interface\\Buttons\\UI-SpellbookIcon-PrevPage-Down.blp")
@@ -282,14 +305,15 @@ function BigBrother:CreateBuffWindow()
 	BuffWindow.LeftButton:SetHeight(18)
 	BuffWindow.LeftButton:SetPoint("TOPLEFT",BuffWindow,"TOPLEFT",64,-5)
 	BuffWindow.LeftButton:SetScript("OnClick",function() 
-							BigBrother_BuffWindow.SelectedBuffs=BigBrother_BuffWindow.SelectedBuffs-1
-							if BigBrother_BuffWindow.SelectedBuffs==0 then
-								BigBrother_BuffWindow.SelectedBuffs=table.getn(BigBrother_BuffTable)
-							end
-							BuffWindow_UpdateBuffs()
-							BuffWindow_UpdateWindow()
-						end)
+		BigBrother_BuffWindow.SelectedBuffs=BigBrother_BuffWindow.SelectedBuffs-1
+		if BigBrother_BuffWindow.SelectedBuffs==0 then
+			BigBrother_BuffWindow.SelectedBuffs=table.getn(BigBrother_BuffTable)
+		end
+		BuffWindow_UpdateBuffs()
+		BuffWindow_UpdateWindow()
+	end)
 
+	-- Right arrow button
 	BuffWindow.RightButton=CreateFrame("Button",nil,BuffWindow)
 	BuffWindow.RightButton:SetNormalTexture("Interface\\Buttons\\UI-SpellbookIcon-NextPage-Up.blp")
 	BuffWindow.RightButton:SetPushedTexture("Interface\\Buttons\\UI-SpellbookIcon-NextPage-Down.blp")
@@ -298,15 +322,15 @@ function BigBrother:CreateBuffWindow()
 	BuffWindow.RightButton:SetHeight(18)
 	BuffWindow.RightButton:SetPoint("TOPRIGHT",BuffWindow,"TOPRIGHT",-64,-5)
 	BuffWindow.RightButton:SetScript("OnClick",function() 
-							BigBrother_BuffWindow.SelectedBuffs=BigBrother_BuffWindow.SelectedBuffs+1
-							if BigBrother_BuffWindow.SelectedBuffs>table.getn(BigBrother_BuffTable) then
-								BigBrother_BuffWindow.SelectedBuffs=1
-								
-							end
-							BuffWindow_UpdateBuffs()
-							BuffWindow_UpdateWindow()
-						end)
+		BigBrother_BuffWindow.SelectedBuffs=BigBrother_BuffWindow.SelectedBuffs+1
+		if BigBrother_BuffWindow.SelectedBuffs>table.getn(BigBrother_BuffTable) then
+			BigBrother_BuffWindow.SelectedBuffs=1
+		end
+		BuffWindow_UpdateBuffs()
+		BuffWindow_UpdateWindow()
+	end)
 	
+	-- Close button
 	BuffWindow.CloseButton=CreateFrame("Button",nil,BuffWindow)
 	BuffWindow.CloseButton:SetNormalTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up.blp")
 	BuffWindow.CloseButton:SetPushedTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Down.blp")
@@ -316,6 +340,8 @@ function BigBrother:CreateBuffWindow()
 	BuffWindow.CloseButton:SetPoint("TOPRIGHT",BuffWindow,"TOPRIGHT",-4,-4)
 	BuffWindow.CloseButton:SetScript("OnClick",function() BigBrother_BuffWindow:Hide();self:UnregisterEvent("UNIT_AURA") end)
 	
+
+	-- Ready check button
 	BuffWindow.RCButton=CreateFrame("Button", nil, BuffWindow)
 	BuffWindow.RCButton:SetNormalTexture("Interface\\RAIDFRAME\\ReadyCheck-Waiting")
 	BuffWindow.RCButton:SetWidth(12)
@@ -353,10 +379,10 @@ function BigBrother:CreateBuffWindow()
 	BuffWindow:SetResizable(true);
 
 	BuffWindow:SetScript("OnSizeChanged", function()
-						if ( BigBrother_BuffWindow.isResizing ) then
-							BuffWindow_ResizeWindow()
-						end
-					end)
+		if ( BigBrother_BuffWindow.isResizing ) then
+			BuffWindow_ResizeWindow()
+		end
+	end)
     
 
 	BigBrother_BuffWindow=BuffWindow
@@ -421,9 +447,9 @@ function BuffWindow_UpdateBuffs()
 		end
 	end
 
-  while PlayerList[index] do -- clear the rest of the table so we dont get nil holes that lead to ill-defined behavior in sort
-	  PlayerList[index] = nil
-	  index = index + 1
+	while PlayerList[index] do -- clear the rest of the table so we dont get nil holes that lead to ill-defined behavior in sort
+		PlayerList[index] = nil
+		index = index + 1
 	end
 
 	table.sort(PlayerList,BuffChecking.sortFunc)
