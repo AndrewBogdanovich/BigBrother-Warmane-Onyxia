@@ -65,6 +65,7 @@ end
 local BigBrother_BuffTable={
 	{
 		name=L["Raid Buffs"],
+		sortFunc=Sort_RaidBuffs,
 		buffs={
 			{{spellData(1459)},{spellData(23028)},{spellData(61024)},{spellData(61316)}}, -- 1459 Arcane Intellect, 23028 Arcane Brilliance, 61024 Dalaran Intellect, 61316 Dalaran Brilliance
 			{{spellData(1243)},{spellData(21562)},{spellData(69377)}}, -- 1243 Power Word: Fortitude, 21562 Prayer of Fortitude, 69377 Runescroll of Fortitude
