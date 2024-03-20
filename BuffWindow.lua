@@ -1,6 +1,6 @@
 local BarHeight=20
-local BarWidth=300
-local TotalBuffs=10
+local BarWidth=620
+local TotalBuffs=30
 local PlayersShown=8
 local RowsCreated=8
 local BuffSpacing=18
@@ -65,24 +65,30 @@ end
 local BigBrother_BuffTable={
 	{
 		name=L["Raid Buffs"],
-		sortFunc=Sort_RaidBuffs,
 		buffs={
 			{{spellData(1459)},{spellData(23028)},{spellData(61024)},{spellData(61316)}}, -- 1459 Arcane Intellect, 23028 Arcane Brilliance, 61024 Dalaran Intellect, 61316 Dalaran Brilliance
 			{{spellData(1243)},{spellData(21562)},{spellData(69377)}}, -- 1243 Power Word: Fortitude, 21562 Prayer of Fortitude, 69377 Runescroll of Fortitude
 			{{spellData(1126)},{spellData(21849)}}, -- 1126 Mark of the Wild, 21849 Gift of the Wild
 			{{spellData(14752)},{spellData(27681)}}, -- 14752 Divine Spirit, 27681 Prayer of Spirit
 			{{spellData(976)},{spellData(27683)}}, -- 976 Shadow Protection, 27683 Prayer of Shadow Protection
-			{},
-			{},
-			{},
-			{},
-			{}
-		}
-	},
-	{
-		name=L["World Buffs"],
-		sortFunc=Sort_RaidBuffs,
-		buffs={
+
+			{{spellData(20217)},{spellData(25898)},{spellData(69378)}}, -- 20217 Blessing of Kings, 25898 Greater Blessing of Kings, 69378 Blessing of Forgotten Kings	
+			{{spellData(19740)},{spellData(25782)},{spellData(6673)}}, -- 19740 Blessing of Might, 25782 Greater Blessing of Might, 6673 Battle Shout
+			{{spellData(19742)},{spellData(25894)},{spellData(5677)}}, -- 19742 Blessing of Wisdom, 25894 Greater Blessing of Wisdom, 5677 Mana Spring
+			{{spellData(20911)},{spellData(25899)},{spellData(14893)}}, -- 20911 Blessing of Sanctuary, 25899 Greater Blessing of Sanctuary, 14893 Inspiration
+			{{spellData(1038)},{spellData(25895)}}, -- 1038 Blessing of Salvation, 25899 Greater Blessing of Salvation
+
+			BigBrother_Flasks,
+			BigBrother_Elixirs_Battle,
+			BigBrother_Elixirs_Battle,
+			BigBrother_Elixirs_Battle,
+			BigBrother_Elixirs_Battle,
+			BigBrother_Elixirs_Guardian,
+			BigBrother_Elixirs_Guardian,
+			BigBrother_Elixirs_Guardian,
+			BigBrother_Elixirs_Guardian,
+      		BigBrother_Foodbuffs,
+
 			{{spellData(15366)}}, -- 15366 Songflower Serenade
 			{{spellData(16609)}}, -- 16609 Warchief's Blessing
 			{{spellData(22888)}}, -- 16609 Rallying Cry of the Dragonslayer
@@ -95,7 +101,8 @@ local BigBrother_BuffTable={
 				{spellData(23738)}, -- 23738 Sayge's Sayge's Dark Fortune of Spirit(increase spirit 10%)
 				{spellData(23737)}, -- 23737 Sayge's Dark Fortune of Stamina(increase stamina 10%)
 				{spellData(23735)}, -- 23735 Sayge's Dark Fortune of Strength(increase strength 10%)
-				{spellData(23736)}}, -- 23736 Sayge's Dark Fortune of Agility(increase agility 10%)
+				{spellData(23736)}, -- 23736 Sayge's Dark Fortune of Agility(increase agility 10%)
+			},
 
 			{{spellData(22818)}}, -- 22818 Mol'dar's Moxie
 			{{spellData(22817)}}, -- 22817 Fengus' Ferocity
@@ -109,38 +116,6 @@ local BigBrother_BuffTable={
 			{{spellData(30336)}}, -- 30336 Permanent Spirit of Zanza
 		}
 	},
-	{
-		name=L["Paladin Buffs"],
-		sortFunc=Sort_PallyBuffs,
-		buffs={
-			{{spellData(20217)},{spellData(25898)},{spellData(69378)}}, -- 20217 Blessing of Kings, 25898 Greater Blessing of Kings, 69378 Blessing of Forgotten Kings	
-			{{spellData(19740)},{spellData(25782)},{spellData(6673)}}, -- 19740 Blessing of Might, 25782 Greater Blessing of Might, 6673 Battle Shout
-			{{spellData(19742)},{spellData(25894)},{spellData(5677)}}, -- 19742 Blessing of Wisdom, 25894 Greater Blessing of Wisdom, 5677 Mana Spring
-			{{spellData(20911)},{spellData(25899)},{spellData(14893)}}, -- 20911 Blessing of Sanctuary, 25899 Greater Blessing of Sanctuary, 14893 Inspiration
-			{{spellData(1038)},{spellData(25895)}}, -- 1038 Blessing of Salvation, 25899 Greater Blessing of Salvation
-			{},
-			{},
-			{},
-			{},
-			{},
-		}
-	},
-	{
-		name=L["Consumables"],
-		sortFunc=Sort_PallyBuffs,
-		buffs={
-			BigBrother_Flasks,
-			BigBrother_Elixirs_Battle,
-			BigBrother_Elixirs_Battle,
-			BigBrother_Elixirs_Battle,
-			BigBrother_Elixirs_Battle,
-			BigBrother_Elixirs_Guardian,
-			BigBrother_Elixirs_Guardian,
-			BigBrother_Elixirs_Guardian,
-			BigBrother_Elixirs_Guardian,
-      		BigBrother_Foodbuffs,
-		}
-	}
 }
 
 function BuffWindow_Functions:CreateBuffRow(parent, xoffset, yoffset)
@@ -150,7 +125,7 @@ function BuffWindow_Functions:CreateBuffRow(parent, xoffset, yoffset)
 	Row:SetHeight(BarHeight)
 	Row:SetWidth(BarWidth)
 	Row:Show()
-	
+
 	Row.Background=Row:CreateTexture(nil,"BACKGROUND")
 	Row.Background:SetAllPoints(Row)
 	Row.Background:SetTexture("Interface\\Buttons\\WHITE8X8.blp")
@@ -162,7 +137,6 @@ function BuffWindow_Functions:CreateBuffRow(parent, xoffset, yoffset)
 	Row.Name:SetTextColor(1.0,1.0,1.0)
 	Row.Name:SetText("Test")
 
-	
 
 	Row.Buff={}
 	for i=1,TotalBuffs do
@@ -297,39 +271,16 @@ function BigBrother:CreateBuffWindow()
 	BuffWindow.Title:SetPoint("TOP",BuffWindow,"TOP",0,-8)
 	BuffWindow.Title:SetTextColor(1.0,1.0,1.0)
 
-	-- Left arrow button
-	BuffWindow.LeftButton=CreateFrame("Button",nil,BuffWindow)
-	BuffWindow.LeftButton:SetNormalTexture("Interface\\Buttons\\UI-SpellbookIcon-PrevPage-Up.blp")
-	BuffWindow.LeftButton:SetPushedTexture("Interface\\Buttons\\UI-SpellbookIcon-PrevPage-Down.blp")
-	BuffWindow.LeftButton:SetWidth(16)
-	BuffWindow.LeftButton:SetHeight(18)
-	BuffWindow.LeftButton:SetPoint("TOPLEFT",BuffWindow,"TOPLEFT",64,-5)
-	BuffWindow.LeftButton:SetScript("OnClick",function() 
-		BigBrother_BuffWindow.SelectedBuffs=BigBrother_BuffWindow.SelectedBuffs-1
-		if BigBrother_BuffWindow.SelectedBuffs==0 then
-			BigBrother_BuffWindow.SelectedBuffs=table.getn(BigBrother_BuffTable)
-		end
-		BuffWindow_UpdateBuffs()
-		BuffWindow_UpdateWindow()
-	end)
+	-- Refresh button
+	BuffWindow.RefreshButton=CreateFrame("Button",nil,BuffWindow)
+	BuffWindow.RefreshButton:SetNormalTexture("Interface\\Buttons\\UI-RotationRight-Button-Up.blp")
+	BuffWindow.RefreshButton:SetPushedTexture("Interface\\Buttons\\UI-RotationRight-Button-Down.blp")
+	BuffWindow.RefreshButton:SetHighlightTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Highlight.blp")
+	BuffWindow.RefreshButton:SetWidth(20)
+	BuffWindow.RefreshButton:SetHeight(20)
+	BuffWindow.RefreshButton:SetPoint("TOPLEFT", BuffWindow,"TOPLEFT", 64,-5)
+	BuffWindow.RefreshButton:SetScript("OnClick", function () BuffWindow_UpdateBuffs() BuffWindow_UpdateWindow() end)
 
-	-- Right arrow button
-	BuffWindow.RightButton=CreateFrame("Button",nil,BuffWindow)
-	BuffWindow.RightButton:SetNormalTexture("Interface\\Buttons\\UI-SpellbookIcon-NextPage-Up.blp")
-	BuffWindow.RightButton:SetPushedTexture("Interface\\Buttons\\UI-SpellbookIcon-NextPage-Down.blp")
-	
-	BuffWindow.RightButton:SetWidth(16)
-	BuffWindow.RightButton:SetHeight(18)
-	BuffWindow.RightButton:SetPoint("TOPRIGHT",BuffWindow,"TOPRIGHT",-64,-5)
-	BuffWindow.RightButton:SetScript("OnClick",function() 
-		BigBrother_BuffWindow.SelectedBuffs=BigBrother_BuffWindow.SelectedBuffs+1
-		if BigBrother_BuffWindow.SelectedBuffs>table.getn(BigBrother_BuffTable) then
-			BigBrother_BuffWindow.SelectedBuffs=1
-		end
-		BuffWindow_UpdateBuffs()
-		BuffWindow_UpdateWindow()
-	end)
-	
 	-- Close button
 	BuffWindow.CloseButton=CreateFrame("Button",nil,BuffWindow)
 	BuffWindow.CloseButton:SetNormalTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up.blp")
@@ -339,11 +290,11 @@ function BigBrother:CreateBuffWindow()
 	BuffWindow.CloseButton:SetHeight(20)
 	BuffWindow.CloseButton:SetPoint("TOPRIGHT",BuffWindow,"TOPRIGHT",-4,-4)
 	BuffWindow.CloseButton:SetScript("OnClick",function() BigBrother_BuffWindow:Hide();self:UnregisterEvent("UNIT_AURA") end)
-	
 
 	-- Ready check button
 	BuffWindow.RCButton=CreateFrame("Button", nil, BuffWindow)
 	BuffWindow.RCButton:SetNormalTexture("Interface\\RAIDFRAME\\ReadyCheck-Waiting")
+	BuffWindow.RCButton:SetHighlightTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Highlight.blp")
 	BuffWindow.RCButton:SetWidth(12)
 	BuffWindow.RCButton:SetHeight(12)
 	BuffWindow.RCButton:SetPoint("TOPLEFT", BuffWindow, "TOPLEFT", 8, -8)
@@ -411,7 +362,7 @@ function BuffWindow_UpdateBuffs()
 		if BigBrother.db.profile.Groups[unit.subgroup] then
 			if (not Filter) or Filter[unit.class] then
 				local player = PlayerList[index]
-				
+
 				if player==nil then
 					player = {}
 					PlayerList[index] = player
@@ -470,7 +421,7 @@ function BuffWindow_UpdateWindow()
 		if not endOfList and PlayerList[i+offset] then
 			local Player=PlayerList[i+offset]
 			Rows[i]:SetPlayer(Player.name,Player.class,Player.unit)
-			for j=1,5 do
+			for j=1,30 do
 				if Player.buff[j] then
 					Rows[i]:SetBuffIcon(j,Player.buff[j][2])
 					Rows[i]:SetBuffName(j,Player.buff[j][1], Player.unit)
