@@ -7,6 +7,14 @@ BigBrother_SpellData.foods = {
 	44106, -- "Well Fed" from Brewfest
 	43730, -- Electrified
 	43722, -- Enlightened
+	24799, -- Smoked Desert Dumplings
+    18192, -- Grilled Squid
+    18125, -- Blessed Sunfruit
+    18194, -- Nightfin Soup
+    22730, -- Runn Tum Tuber Surprise
+    18141, -- Blessed Sunfruit Juice
+    19710, -- Tender Wolf Steak
+    25661, -- Dirge's Kickin' Chimaerok Chops
 }
 
 BigBrother_SpellData.flasks = {
